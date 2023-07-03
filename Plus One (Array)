@@ -1,0 +1,32 @@
+class Solution {
+    public int[] plusOne(int[] digits) {
+         
+        int n = digits.length;
+
+        //We first store the length of the array in a variable for convenience
+
+        for(int i=n-1; i>=0;i--){
+
+            //Running a for loop from the right most to the left most element
+
+            if(digits[i]<9){
+                digits[i]+=1;
+                return digits;
+
+                //If the last digit is less than 9 then we simply increment it and return the array
+            }
+            else{
+                digits[i]=0;
+
+                //If the last digit is 9 then we turn it to 0 and then check the previous digit
+            }
+        }
+
+        digits=new int[n+1];
+        digits[0]=1;
+
+        //We now increase the length of the array and assign the value one to the left most integer.
+
+        return digits;
+    }
+}
