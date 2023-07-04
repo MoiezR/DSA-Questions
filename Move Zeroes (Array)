@@ -1,0 +1,26 @@
+class Solution {
+    public void moveZeroes(int[] nums) {
+
+        int num[]=new int[nums.length];
+        
+        //We initialize a new array 
+
+        int j=0;
+
+        for(int i = 0; i<nums.length ; i++){
+            if(nums[i]!=0){
+               num[j]=nums[i];
+               j++;
+            }
+        }
+
+        //We run a for loop to transfer the non-zero elements to the new array
+
+        for(int i=0; i<nums.length; i++){
+            nums[i]=num[i];
+        }
+
+        //We now copy the second array to the first one, all non-zero values are in order and the rest are zero
+        
+    }
+}
