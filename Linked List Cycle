@@ -9,16 +9,33 @@
  *     }
  * }
  */
+//Brute Force
 public class Solution {
     public boolean hasCycle(ListNode head) {
         ListNode curr = head;
-        HashSet<Integer> hs=new HashSet<>(); 
+        HashSet<ListNode> hs=new HashSet<>(); 
         while(curr!=null){
-            if(hs.contains(curr.val)){
+            if(hs.contains(curr)){
                 return true;
             }
-            hs.add(curr.val);
+            hs.add(curr);
             curr=curr.next;
+        }
+        return false;
+    }
+}
+
+//Optimal
+public class Solution {
+    public boolean hasCycle(ListNode head) {
+        ListNode curr1 = head;
+        ListNode curr2=head;
+
+        while(curr2!=null && curr2.next!=null){
+            curr1=curr1.next;
+            curr2=curr2.next.next;
+
+            if(curr1==curr2) return true;
         }
         return false;
     }
