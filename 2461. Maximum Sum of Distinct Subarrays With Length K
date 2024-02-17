@@ -23,3 +23,26 @@ class Solution {
 }
 
 //Brute force approach
+
+class Solution {
+    public long maximumSubarraySum(int[] nums, int k) {
+        long max=0, curr=0;
+        HashSet<Integer> hs = new HashSet<>();
+        int right=0;
+        for(int left=0; left<nums.length; left++){
+            while(right<nums.length&&!hs.contains(nums[right])&&hs.size()<k){
+                hs.add(nums[right]);
+                curr+=nums[right];
+                right++;
+            }
+            if(hs.size()==k){
+                max = Math.max(max, curr);
+            }
+            hs.remove(nums[left]);
+            curr-=nums[left];
+        }
+        return max;
+    }
+}
+
+//Suboptimal approach
