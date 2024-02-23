@@ -1,0 +1,30 @@
+class Solution {
+    public List<List<Integer>> threeSum(int[] nums) {
+        int n = nums.length;
+        int sum=0;
+        List<List<Integer>> ll = new ArrayList<>();
+        HashSet<Integer> hs = new HashSet<>();
+        for(int i=0; i<n ; i++){
+            for(int j=i+1; j<n; j++){
+                for(int k=j+1; k<n ; k++){
+                    if(nums[i]+nums[j]+nums[k]==0){
+                        int flag = 0;
+                        if(hs.contains(nums[i])) flag++;
+                        if(hs.contains(nums[j])) flag++;
+                        if(hs.contains(nums[k])) flag++;
+                        if(flag<3){
+                        List<Integer> l1 = new ArrayList<>();
+                        l1.add(nums[i]);
+                        l1.add(nums[j]);
+                        l1.add(nums[k]);
+                        ll.add(l1);}
+                        hs.add(nums[i]);
+                        hs.add(nums[j]);
+                        hs.add(nums[k]);
+                    }
+                }
+            }
+        }
+        return ll;
+    }
+}
