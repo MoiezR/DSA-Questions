@@ -42,3 +42,23 @@ public class Solution {
 }
 
 //Two Pointer
+
+import java.util.*;
+public class Solution {
+    public static List< Integer > superiorElements(int []a) {
+        // Write your code here.
+        int n = a.length;
+        ArrayList<Integer> ls = new ArrayList<Integer>();
+        int lead = a[n-1];
+        ls.add(lead);
+        for(int i = n-1; i>=0; i--){
+            if(a[i]>lead){
+                ls.add(a[i]);
+            }
+            lead = Math.max(a[i], lead);
+        }
+        return ls;
+    }
+}
+
+//Optimal
