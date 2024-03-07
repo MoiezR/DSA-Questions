@@ -6,12 +6,10 @@ class Solution {
             if(target==nums[mid]) return true;
 
             if(nums[high]==nums[mid] && nums[mid]==nums[low]){
-                for(int i=low; i<high; i++){
-                    if(target==nums[i]) return true;
-                }
+                low++;
+                high--;
             }
-
-            if(nums[low]<=nums[mid]){
+            else if(nums[low]<=nums[mid]){
                 if(target>nums[mid] || target<nums[low]) low=mid+1;
                 else high=mid-1;
             }
@@ -24,4 +22,4 @@ class Solution {
     }
 }
 
-//Brute Force using Binary Search
+//Binary Search
