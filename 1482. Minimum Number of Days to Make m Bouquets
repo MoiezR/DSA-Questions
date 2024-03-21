@@ -1,0 +1,39 @@
+class Solution {
+    public int minDays(int[] bloomDay, int m, int k) {
+        int n = bloomDay.length;
+        if(m*k>n) return -1;
+        int ans=-1;
+        int max=Integer.MIN_VALUE, min=Integer.MAX_VALUE;
+        for(int i=0; i<n; i++){
+            max = Math.max(max, bloomDay[i]);
+            min = Math.min(min, bloomDay[i]);
+        }
+        int low=min, high=max;
+        while(low<=high){
+            int mid = (low+high)/2;
+            if(dayCount(bloomDay, mid, k, n)>=m){
+                ans=mid;
+                high=mid-1;
+            }
+            else low=mid+1;
+        }
+        return ans;
+    }
+    public int dayCount(int[] bloomDay, int mid, int k, int n){
+        int count=0;
+        int daysNo=0;
+        for(int i=0; i<n; i++){
+            if(bloomDay[i]<=mid){
+                count++;
+            }
+            else{
+                daysNo+=(count/k);
+                count=0;
+            }
+        }
+        daysNo+=(count/k);
+        return daysNo;
+    }
+}
+
+//Using Binary Search
