@@ -1,0 +1,21 @@
+//Brute Force Approach
+
+class Solution {
+    public boolean isPalindrome(ListNode head) {
+        ListNode curr = head;
+        Stack<Integer> st = new Stack<>();
+        while(curr!=null){
+            st.push(curr.val);
+            curr=curr.next;
+        }
+        curr=head;
+        while(curr!=null){
+            if(st.peek()==curr.val) st.pop();
+            curr=curr.next;
+        }
+        return st.isEmpty();
+    }
+}
+
+//Optimal Approach
+
