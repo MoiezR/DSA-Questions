@@ -17,3 +17,51 @@ class Solution {
         return head;
     }
 }
+
+//Optimal approach using MergeSort
+
+class Solution {
+    public ListNode sortList(ListNode head) {
+        if(head==null || head.next==null) return head;
+        ListNode middle = findMiddle(head);
+        ListNode lhead = head;
+        ListNode rhead = middle.next;
+        middle.next = null;
+        lhead = sortList(lhead);
+        rhead = sortList(rhead);
+        
+        return merge(lhead, rhead);
+    }
+    public ListNode findMiddle(ListNode head){
+        ListNode slow = head;
+        ListNode fast = head.next;
+        while(fast!=null && fast.next!=null){
+            slow = slow.next;
+            fast = fast.next.next;
+        }
+        return slow;
+    }
+    public ListNode merge(ListNode lhead, ListNode rhead){
+        ListNode dum = new ListNode(-1);
+        ListNode temp = dum;
+        while(lhead!=null && rhead!=null){
+            if(lhead.val<=rhead.val){
+                temp.next = lhead;
+                temp = temp.next;
+                lhead = lhead.next;
+            }
+            else{
+                temp.next = rhead;
+                temp = temp.next;
+                rhead = rhead.next;
+            }
+        }
+        if(lhead==null){
+            temp.next = rhead;
+        }
+        else{
+            temp.next = lhead;
+        }
+        return dum.next;
+    }
+}
