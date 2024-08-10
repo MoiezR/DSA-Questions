@@ -73,3 +73,30 @@ class Solution {
         return newHead;
     }
 }
+
+//Optimized using Recursion
+
+
+class Solution {
+    public Node addOne(Node head) {
+        // code here.
+        int carry = counter(head);
+        if(carry==1){
+            Node newNode = new Node(1);
+            newNode.next = head;
+            head = newNode;
+        }
+        return head;
+    }
+    
+    public int counter(Node head){
+        if(head==null) return 1;
+        int carry = counter(head.next);
+        head.data+=carry;
+        if(head.data==10){
+            head.data = 0;
+            return 1;
+        }
+        return 0;
+    }
+}
