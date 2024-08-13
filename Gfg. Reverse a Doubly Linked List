@@ -1,0 +1,16 @@
+//Iterative approach
+
+public static Node reverseDLL(Node  head)
+{
+    //Your code here
+    Node curr = head;
+    Node pre = null;
+    while(curr!=null){
+        Node next = curr.next;
+        curr.next = pre;
+        curr.prev = next;
+        pre = curr;
+        curr = next;
+    }
+    return pre;
+}
