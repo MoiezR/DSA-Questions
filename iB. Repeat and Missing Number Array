@@ -25,24 +25,31 @@ public class Solution {
     public int[] repeatedNumber(final int[] A) {
         int n = A.length;
         
-        long eSum=(n*(n+1))/2;
-        long rSum=0;
-        long e2Sum=(n*(n+1)*(2*n+1))/6;
-        long r2Sum=0;
-        
-        for(int i=0; i<A.length; i++){
-            rSum+=A[i];
-            r2Sum+=(long)A[i]*(long)A[i];
+        long eSum = (long) n * (n + 1) / 2;
+        long e2Sum = (long) n * (n + 1) * (2 * n + 1) / 6;
+
+        long rSum = 0;
+        long r2Sum = 0;
+        for (int i = 0; i < n; i++) {
+            rSum += A[i];
+            r2Sum += (long) A[i] * A[i];
         }
-        
-        long val1 = rSum-eSum;
-        long val2 = r2Sum-e2Sum;
-        val2 = val2/val1;
-        long x = (val1+val2)/2;
-        long y = x-val1;
-        
-        return new int[]{(int)x, (int)y};
-        
+
+        long diffSum = rSum - eSum; // x - y (where x is the repeated number, y is the missing number)
+        long diffSqSum = r2Sum - e2Sum; // x^2 - y^2
+
+        // Step 4: Solve the equations
+        // diffSqSum = x^2 - y^2 = (x - y)(x + y)
+        // sumXY = x + y = diffSqSum / diffSum
+        long sumXY = diffSqSum / diffSum;
+
+        // x = (sumXY + diffSum) / 2
+        long x = (sumXY + diffSum) / 2;
+        // y = x - diffSum
+        long y = x - diffSum;
+
+        return new int[]{(int) x, (int) y};
     }
 }
+
 
