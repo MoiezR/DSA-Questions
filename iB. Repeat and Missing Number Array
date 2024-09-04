@@ -18,3 +18,31 @@ public class Solution {
     }
 }
 
+//Optimal
+
+public class Solution {
+    // DO NOT MODIFY THE ARGUMENTS WITH "final" PREFIX. IT IS READ ONLY
+    public int[] repeatedNumber(final int[] A) {
+        int n = A.length;
+        
+        long eSum=(n*(n+1))/2;
+        long rSum=0;
+        long e2Sum=(n*(n+1)*(2*n+1))/6;
+        long r2Sum=0;
+        
+        for(int i=0; i<A.length; i++){
+            rSum+=A[i];
+            r2Sum+=(long)A[i]*(long)A[i];
+        }
+        
+        long val1 = rSum-eSum;
+        long val2 = r2Sum-e2Sum;
+        val2 = val2/val1;
+        long x = (val1+val2)/2;
+        long y = x-val1;
+        
+        return new int[]{(int)x, (int)y};
+        
+    }
+}
+
