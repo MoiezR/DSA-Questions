@@ -1,0 +1,21 @@
+//Optimal
+
+class Solution {
+    public double myPow(double x, int n) {
+        double result = 1.0;
+        long j = n;
+        if(n<0) j = -1*j;
+        while(j>0){
+            if(j%2==1){
+                result*=x;
+                j-=1;
+            }
+            else{
+                x*=x;
+                j/=2;
+            }
+        }
+        if(n<0) return 1/result;
+        return result;
+    }
+}
