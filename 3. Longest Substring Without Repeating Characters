@@ -1,0 +1,64 @@
+//Brute Force
+
+class Solution {
+    public int lengthOfLongestSubstring(String s) {
+        int n = s.length();
+        int maxCount = 0;
+        for(int i=0; i<n; i++){
+            HashSet<Character> hs = new HashSet<>();
+            int count = 0;
+            for(int j=i; j<n; j++){
+                if(!hs.contains(s.charAt(j))){
+                    count++;
+                    maxCount = Math.max(count, maxCount);
+                    hs.add(s.charAt(j));
+                }
+                else{
+                    break;
+                }
+            }
+        }
+        return maxCount;
+    }
+}
+
+//Sub-Optimal, O(2N)
+
+class Solution {
+    public int lengthOfLongestSubstring(String s) {
+        int n = s.length();
+        HashSet<Character> hs = new HashSet<>();
+        int maxlen = 0;
+        int left = 0;
+        for(int right=0; right<n; right++){
+            if(hs.contains(s.charAt(right))){
+                while(left<right && hs.contains(s.charAt(right))){
+                    hs.remove(s.charAt(left));
+                    left++;
+                }
+            }
+            hs.add(s.charAt(right));
+            maxlen = Math.max(maxlen, right-left+1);
+        }
+        return maxlen;
+    }
+}
+
+//Optimal, O(N)
+
+class Solution {
+    public int lengthOfLongestSubstring(String s) {
+        int n = s.length();
+        HashMap<Character, Integer> hm = new HashMap<>();
+        int maxlen = 0;
+        int left = 0;
+        for(int right=0; right<n; right++){
+            if(hm.containsKey(s.charAt(right))){
+                left = Math.max(hm.get(s.charAt(right))+1, left);
+            }
+            hm.put(s.charAt(right), right);
+            maxlen = Math.max(maxlen, right-left+1);
+        }
+        return maxlen;
+    }
+}
