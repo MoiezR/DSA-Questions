@@ -1,0 +1,50 @@
+//Brute Force
+
+class Solution {
+    public List<String> generateParenthesis(int n) {
+        List<String> arr = new ArrayList<>();
+        int m = n*2;
+        char[] a = new char[m];
+        generateAllParentheses(arr, 0, a, m);
+        return arr;
+    }
+    public void generateAllParentheses(List<String> arr, int i, char[] a, int m){
+        if(i==m){
+            Stack<Character> st = new Stack<>();
+            st.push('1');
+            for(int j=0; j<m; j++){
+                if(st.isEmpty()) break;
+                if(a[j]=='(') st.push('(');
+                else st.pop();
+            }
+            if(!st.isEmpty() && st.peek()=='1') arr.add(new String(a));
+            return;
+        }
+        a[i] = '(';
+        generateAllParentheses(arr, i+1, a, m);
+        a[i] = ')';
+        generateAllParentheses(arr, i+1, a, m);
+    }
+}
+
+//Optimal Recursive
+
+class Solution {
+    public List<String> generateParenthesis(int n) {
+        List<String> arr = new ArrayList<>();
+        generateAllValidParenthesis("", 0, 0, n, arr);
+        return arr;
+    }
+    public void generateAllValidParenthesis(String curr, int open, int closed, int total, List<String> arr){
+        if(curr.length()==total*2){
+            arr.add(curr);
+            return;
+        }
+        if(open<total){
+            generateAllValidParenthesis(curr+'(', open+1, closed, total, arr);
+        }
+        if(closed<open){
+            generateAllValidParenthesis(curr+')', open, closed+1, total, arr);
+        }
+    }
+}
