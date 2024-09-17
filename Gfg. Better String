@@ -1,0 +1,50 @@
+//Brute Force
+
+
+class Solution {
+    public static String betterString(String str1, String str2) {
+        // Code here
+        HashSet<List<String>> res1 = new HashSet<>();
+        HashSet<List<String>> res2 = new HashSet<>();
+        backtrack(str1, 0, new ArrayList<>(), res1);
+        backtrack(str2, 0, new ArrayList<>(), res2);
+        if(res2.size()>res1.size()) return str2;
+        return str1;
+    }
+    public static void backtrack(String s, int i, List<Character> arr, HashSet<List<String>> res){
+        if(i>=s.length()){
+            res.add(new ArrayList(arr));
+            return;
+        }
+        backtrack(s, i+1, arr, res);
+        arr.add(s.charAt(i));
+        backtrack(s, i+1, arr, res);
+        arr.remove(arr.size()-1);
+    }
+}
+
+//Optimal, O(n) T and S 
+
+class Solution {
+    public static String betterString(String str1, String str2) {
+        // Code here
+        int s1 = countSubsequences(str1);
+        int s2 = countSubsequences(str2);
+        if(s2>s1) return str2;
+        return str1;
+    }
+    public static int countSubsequences(String str){
+        HashMap<Character, Integer> hm = new HashMap<>();
+        int n = str.length();
+        int dp[] = new int[n+1];
+        dp[0]=1;
+        for(int i=1; i<=n; i++){
+            dp[i] = 2*dp[i-1];
+            if(hm.containsKey(str.charAt(i-1))){
+                dp[i] = dp[i]-dp[hm.get(str.charAt(i-1))];
+            }
+            hm.put(str.charAt(i-1), i-1);
+        }
+        return dp[n];
+    }
+}
