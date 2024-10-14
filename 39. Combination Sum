@@ -1,0 +1,21 @@
+//Using Recursion and Backtracking
+
+class Solution {
+    public List<List<Integer>> combinationSum(int[] candidates, int target) {
+        List<List<Integer>> arr = new ArrayList<>();
+        combinations(0, candidates, target, new ArrayList<>(), arr);
+        return arr;
+    }
+    public void combinations(int i, int[] candidates, int target, List<Integer> temp, List<List<Integer>> arr){
+        if(i==candidates.length){
+            if(target==0) arr.add(new ArrayList<>(temp));
+            return;
+        }
+        if(candidates[i]<=target){
+            temp.add(candidates[i]);
+            combinations(i, candidates, target-candidates[i], temp, arr);
+            temp.remove(temp.size()-1);
+        }
+        combinations(i+1, candidates, target, temp, arr);
+    }
+}
