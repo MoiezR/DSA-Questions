@@ -1,0 +1,37 @@
+//Brute Force 
+
+class Solution {
+    ArrayList<Integer> subsetSums(ArrayList<Integer> arr, int n) {
+        // code here
+        ArrayList<Integer> res = new ArrayList<>();
+        backtrack(arr, 0, n, new ArrayList<>(), res, 0);
+        return res;
+    }
+    void backtrack(ArrayList<Integer> arr, int i, int n, ArrayList<Integer> ds, ArrayList<Integer> res, int sum){
+        res.add(sum);
+        for(int k=i; k<n; k++){
+            ds.add(arr.get(k));
+            backtrack(arr, k+1, n, ds, res, sum+arr.get(k));
+            ds.remove(ds.size()-1);
+        }
+    }
+}
+
+//Alternate
+
+class Solution {
+    ArrayList<Integer> subsetSums(ArrayList<Integer> arr, int n) {
+        // code here
+        ArrayList<Integer> res = new ArrayList<>();
+        backtrack(arr, 0, n, res, 0);
+        return res;
+    }
+    void backtrack(ArrayList<Integer> arr, int i, int n, ArrayList<Integer> res, int sum){
+        if(i==n){
+            res.add(sum);
+            return;
+        }
+        backtrack(arr, i+1, n, res, sum+arr.get(i));
+        backtrack(arr, i+1, n, res, sum);
+    }
+}
