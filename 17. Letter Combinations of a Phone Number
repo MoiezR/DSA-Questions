@@ -1,0 +1,30 @@
+class Solution {
+    public List<String> letterCombinations(String digits) {
+        List<String> result = new ArrayList<>();
+        if(digits.length()==0) return result;
+        StringBuilder output = new StringBuilder();
+        HashMap<Integer, String> hm = new HashMap<>();
+        hm.put(2, "abc");
+        hm.put(3, "def");
+        hm.put(4, "ghi");
+        hm.put(5, "jkl");
+        hm.put(6, "mno");
+        hm.put(7, "pqrs");
+        hm.put(8, "tuv");
+        hm.put(9, "wxyz");
+        backtrack(digits, 0, output, hm, result);
+        return result;
+    }
+    public void backtrack(String digits, int index, StringBuilder output, HashMap<Integer, String> hm, List<String> result){
+        if(index==digits.length()){
+            result.add(output.toString());
+            return;
+        }
+        String s = hm.get(digits.charAt(index)-'0');
+        for(int i=0; i<s.length(); i++){
+            output.append(s.charAt(i));
+            backtrack(digits, index+1, output, hm, result);
+            output.deleteCharAt(output.length()-1);
+        }
+    }
+}
