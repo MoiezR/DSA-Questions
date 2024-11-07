@@ -1,0 +1,105 @@
+//Brute Force 
+
+class Solution {
+    public List<List<String>> solveNQueens(int n) {
+        char[][] board = new char[n][n];
+        for(int i=0; i<n; i++){
+            for(int j=0; j<n; j++){
+                board[i][j] = '.';
+            }
+        }
+        List<List<String>> result = new ArrayList<>();
+        solve(board, 0, result);
+        return result;
+    }
+    public void solve(char[][] board, int col, List<List<String>> result){
+        if(col==board.length){
+            result.add(construct(board));
+            return;
+        }
+        for(int row=0; row<board.length; row++){
+            if(validateQueen(board, row, col)){
+                board[row][col] = 'Q';
+                solve(board, col+1, result);
+                board[row][col] = '.';
+            }
+        }
+    }
+    public boolean validateQueen(char[][] board, int row, int col){
+        int r1 = row;
+        int c1 = col;
+        while(row>=0 && col>=0){
+            if(board[row][col]=='Q') return false;
+            row--;
+            col--;
+        }
+        row = r1;
+        col = c1;
+        while(row<board.length && col>=0){
+            if(board[row][col]=='Q') return false;
+            row++;
+            col--;
+        }
+        col = c1;
+        row = r1;
+        while(col>=0){
+            if(board[row][col]=='Q') return false;
+            col--;
+        }
+        return true;
+    }
+    public List<String> construct(char[][] board){
+        List<String> res = new ArrayList<>();
+        for(int i=0; i<board.length; i++){
+            String s = new String(board[i]);
+            res.add(s);
+        }
+        return res;
+    }
+}
+
+//Optimal
+
+class Solution {
+    public List<List<String>> solveNQueens(int n) {
+        char[][] board = new char[n][n];
+        for(int i=0; i<n; i++){
+            for(int j=0; j<n; j++){
+                board[i][j] = '.';
+            }
+        }
+        int[] leftRow = new int[n];
+        int[] upperDiagonal = new int[2*n-1];
+        int[] lowerDiagonal = new int[2*n-1];
+        List<List<String>> result = new ArrayList<>();
+        solve(board, 0, result, leftRow, upperDiagonal, lowerDiagonal);
+        return result;
+    }
+    public void solve(char[][] board, int col, List<List<String>> result, int[] leftRow, int[] upperDiagonal, int[] lowerDiagonal){
+        if(col==board.length){
+            result.add(construct(board));
+            return;
+        }
+        for(int row=0; row<board.length; row++){
+            if(leftRow[row]==0 && lowerDiagonal[row+col]==0 && upperDiagonal[board.length-1+col-row]==0){
+                leftRow[row]=1;
+                lowerDiagonal[row+col]=1;
+                upperDiagonal[board.length-1+col-row]=1;
+                board[row][col] = 'Q';
+                solve(board, col+1, result, leftRow, upperDiagonal, lowerDiagonal);
+                board[row][col] = '.';
+                leftRow[row]=0;
+                lowerDiagonal[row+col]=0;
+                upperDiagonal[board.length-1+col-row]=0;
+            }
+        }
+    }
+    public List<String> construct(char[][] board){
+        List<String> res = new ArrayList<>();
+        for(int i=0; i<board.length; i++){
+            String s = new String(board[i]);
+            res.add(s);
+        }
+        return res;
+    }
+}
