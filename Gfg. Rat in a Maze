@@ -1,0 +1,44 @@
+//Recursion
+
+// User function Template for Java
+class Solution {
+    // Function to find all possible paths
+    public ArrayList<String> findPath(ArrayList<ArrayList<Integer>> mat) {
+        // code here
+        ArrayList<String> result = new ArrayList<>();
+        int n = mat.size();
+        int m = mat.get(0).size();
+        if(mat.get(0).get(0)==0) return result;
+        if(mat.get(n-1).get(m-1)==0) return result;
+        solve(mat, result, new String(), 0, 0, n, m);
+        Collections.sort(result);
+        return result;
+    }
+    
+    public void solve(ArrayList<ArrayList<Integer>> mat, ArrayList<String> result, String s, int i, int j, int n, int m){
+        if(i==n-1 && j==m-1){
+            result.add(new String(s));
+            return;
+        }
+        
+        mat.get(i).set(j, 0);
+        
+        if(j<n-1 && mat.get(i).get(j+1)==1){
+            solve(mat, result, s+'R', i, j+1, n, m);
+        }
+        
+        if(i<n-1 && mat.get(i+1).get(j)==1){
+            solve(mat, result, s+'D', i+1, j, n, m);
+        }
+        
+        if(i>0 && mat.get(i-1).get(j)==1){
+            solve(mat, result, s+'U', i-1, j, n, m);
+        }
+        
+        if(j>0 && mat.get(i).get(j-1)==1){
+            solve(mat, result, s+'L', i, j-1, n, m);
+        }
+        
+        mat.get(i).set(j, 1);
+    }
+}
